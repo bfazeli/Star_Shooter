@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class GameController : MonoBehaviour {
@@ -9,9 +10,14 @@ public class GameController : MonoBehaviour {
     public int hazardCount;
     public float startWait, spawnWait;
     public float waveWait;
+    public Text scoreText;
+
+    private int score;
 
 	private void Start()
 	{
+        score = 0;
+        UpdateScore();
         StartCoroutine(SpawnWaves());
 	}
 
@@ -23,7 +29,7 @@ public class GameController : MonoBehaviour {
      *
      */
     IEnumerator SpawnWaves() {
-
+        
         yield return new WaitForSeconds(startWait);
         while (true)
         {
@@ -36,5 +42,14 @@ public class GameController : MonoBehaviour {
             }
             yield return new WaitForSeconds(waveWait);
         }
+    }
+
+    void UpdateScore() {
+        scoreText.text = "Score: " + score;
+    }
+
+    public void AddScore(int newScoreValue) {
+        score += newScoreValue;
+        UpdateScore();
     }
 }
